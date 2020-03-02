@@ -56,7 +56,6 @@ $(NAME_SOL):    $(OBJ_SOL)
 clean:
 		@rm -f $(OBJ_GEN)
 		@rm -f $(OBJ_SOL)
-		@mr_clean
 		@($(ECHO) $(BOLD) $(GREEN)✓$(LIGHT_BLUE)" CLEAN "$(DEFAULT))
 
 fclean: clean
@@ -64,7 +63,6 @@ fclean: clean
 		@rm -f $(OBJ_SOL)
 		@rm -f $(NAME_GEN)
 		@rm -f $(NAME_SOL)
-		@mr_clean
 		@($(ECHO) $(BOLD) $(GREEN)✓$(LIGHT_BLUE)" FCLEAN "$(DEFAULT))
 
 re: fclean all
