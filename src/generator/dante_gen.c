@@ -45,6 +45,16 @@ static char **get_empty_maze(char **av)
     return maze;
 }
 
+static int display_maze(char **maze)
+{
+    for (int u = 0; maze[u]; u++) {
+        printf("%s\n", maze[u]);
+        free(maze[u]);
+    }
+    free(maze);
+    return 0;
+}
+
 int main(int ac, char **av)
 {
     char **maze;
@@ -52,7 +62,5 @@ int main(int ac, char **av)
     if (error_gest(ac, av))
         return 84;
     maze = get_empty_maze(av);
-    for (int u = 0; maze[u]; u++)
-        printf("%s\n", maze[u]);
-    return 0;
+    return display_maze(maze);
 }
