@@ -30,14 +30,14 @@ LIGHT_BLUE      =       "\e[94m"
 LIGHT_MAGEN     =       "\e[95m"
 LIGHT_CYAN      =       "\e[96m"
 
-SRC_GEN =   src/generator/dante_gen.c
-SRC_SOL =   src/solver/dante_sol.c
+SRC_GEN =   generator/src/dante_gen.c
+SRC_SOL =   solver/src/dante_sol.c
 
 OBJ_GEN =   $(SRC_GEN:.c=.o)
 OBJ_SOL =   $(SRC_SOL:.c=.o)
 
-NAME_GEN	=   generator
-NAME_SOL	=   solver
+NAME_GEN	=   ./generator/generator
+NAME_SOL	=   ./solver/solver
 
 CFLAGS  +=  -I include -Wall -Wextra
 
