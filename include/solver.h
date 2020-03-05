@@ -5,12 +5,11 @@
 ** header solver
 */
 
-#include <stdlib.h>
-#include <stdbool.h>
+#include "dante.h"
 
 #ifndef SOL_DANTE_H_
 #define SOL_DANTE_H_
 
-#define EXIT_ERROR 84
+char **get_map(int argc, char **argv, vector *end);
 
 #endif

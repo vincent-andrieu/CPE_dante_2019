@@ -30,9 +30,10 @@ LIGHT_BLUE      =       "\e[94m"
 LIGHT_MAGEN     =       "\e[95m"
 LIGHT_CYAN      =       "\e[96m"
 
-SRC_GEN =   generator/src/dante_gen.c	\
+SRC_GEN =   generator/src/dante_gen.c		\
 			generator/src/generator.c
-SRC_SOL =   solver/src/dante_sol.c
+SRC_SOL =   solver/src/dante_sol.c 			\
+			solver/src/map.c
 
 OBJ_GEN =   $(SRC_GEN:.c=.o)
 OBJ_SOL =   $(SRC_SOL:.c=.o)
@@ -41,6 +42,7 @@ NAME_GEN	=   ./generator/generator
 NAME_SOL	=   ./solver/solver
 
 CFLAGS  +=  -I include -Wall -Wextra
+LDFLAGS +=  -L lib/my -lmy
 
 all:    $(NAME_GEN) $(NAME_SOL)
 
@@ -51,7 +53,8 @@ $(NAME_GEN):    $(OBJ_GEN)
 
 $(NAME_SOL):    $(OBJ_SOL)
 		@$(ECHO)
-		@gcc -o $(NAME_SOL) $(OBJ_SOL) \
+		@make -C lib/my
+		@gcc -o $(NAME_SOL) $(OBJ_SOL) $(LDFLAGS) \
 		&& $(ECHO) $(BOLD) $(GREEN)"► BUILD SUCCESS !"$(DEFAULT) || $(ECHO) $(BOLD) $(RED)"► BUILD FAILED"$(DEFAULT)
 
 clean:
