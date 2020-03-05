@@ -13,4 +13,9 @@
 
 #define EXIT_ERROR 84
 
+#define WALL 'X'
+#define EMPTY '*'
+
+void make_maze(char **maze, int x, int y, char **av);
+
 #endif

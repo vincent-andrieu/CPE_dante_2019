@@ -30,7 +30,8 @@ LIGHT_BLUE      =       "\e[94m"
 LIGHT_MAGEN     =       "\e[95m"
 LIGHT_CYAN      =       "\e[96m"
 
-SRC_GEN =   generator/src/dante_gen.c
+SRC_GEN =   generator/src/dante_gen.c	\
+			generator/src/generator.c
 SRC_SOL =   solver/src/dante_sol.c
 
 OBJ_GEN =   $(SRC_GEN:.c=.o)
