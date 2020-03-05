@@ -16,6 +16,12 @@
 #define WALL 'X'
 #define EMPTY '*'
 
-void make_maze(char **maze, int x, int y, char **av);
+typedef struct vector_s
+{
+    int x;
+    int y;
+} vector;
+
+void make_maze(char **maze, vector pos, char **av);
 
 #endif

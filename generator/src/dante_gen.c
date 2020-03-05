@@ -7,13 +7,16 @@
 
 #include <string.h>
 #include <stdbool.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 #include <time.h>
 #include "generator.h"
 
-static bool error_gest(int ac, char **av)
+static bool error_gest(int ac, char **av, vector scale)
 {
+    if (scale.x <= 0 || scale.y <= 0)
+        return true;
     if (ac == 3)
         return false;
     else if (ac == 4) {
@@ -26,10 +29,10 @@ static bool error_gest(int ac, char **av)
         return true;
 }
 
-static char **get_empty_maze(char **av)
+static char **get_empty_maze(vector scale)
 {
-    int size_y = atoi(av[2]);
-    int size_x = atoi(av[1]);
+    int size_y = scale.y;
+    int size_x = scale.x;
     char **maze = malloc(sizeof(char *) * (size_y + 1));
 
     if (!maze)
@@ -57,12 +60,13 @@ static int display_maze(char **maze)
 
 int main(int ac, char **av)
 {
+    vector scale = {atoi(av[1]), atoi(av[2])};
     char **maze;
 
     srand(time(NULL));
-    if (error_gest(ac, av))
+    if (error_gest(ac, av, scale))
         return 84;
-    maze = get_empty_maze(av);
-    make_maze(maze, 0, 0, av);
+    maze = get_empty_maze(scale);
+    make_maze(maze, (vector) {0, 0}, av);
     return display_maze(maze);
 }

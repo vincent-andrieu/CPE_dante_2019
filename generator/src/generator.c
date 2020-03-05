@@ -7,21 +7,21 @@
 
 #include "generator.h"
 
-void make_maze(char **maze, int x, int y, char **av)
+void make_maze(char **maze, vector pos, char **av)
 {
-    maze[y][x] = EMPTY;
-    if (x == atoi(av[1]) - 1 && y == atoi(av[2]) - 1)
+    maze[pos.y][pos.x] = EMPTY;
+    if (pos.x == atoi(av[1]) - 1 && pos.y == atoi(av[2]) - 1)
         return;
-    if (x == atoi(av[1]) - 1) {
-        make_maze(maze, x, y + 1, av);
+    if (pos.x == atoi(av[1]) - 1) {
+        make_maze(maze, (vector) {pos.x, pos.y + 1}, av);
         return;
     }
-    if (y == atoi(av[2]) - 1) {
-        make_maze(maze, x + 1, y, av);
+    if (pos.y == atoi(av[2]) - 1) {
+        make_maze(maze, (vector) {pos.x + 1, pos.y}, av);
         return;
     }
     if (rand() % 2 == 0)
-        make_maze(maze, x + 1, y, av);
+        make_maze(maze, (vector) {pos.x + 1, pos.y}, av);
     else
-        make_maze(maze, x, y + 1, av);
+        make_maze(maze, (vector) {pos.x, pos.y + 1}, av);
 }
