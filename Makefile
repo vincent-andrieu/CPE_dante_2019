@@ -54,7 +54,7 @@ $(NAME_GEN):    $(OBJ_GEN)
 
 $(NAME_SOL):    $(OBJ_SOL)
 		@$(ECHO)
-		@make -C lib/my
+		@make -s -C lib/my --no-print-directory
 		@gcc -o $(NAME_SOL) $(OBJ_SOL) $(LDFLAGS) \
 		&& $(ECHO) $(BOLD) $(GREEN)"► BUILD SUCCESS !"$(DEFAULT) || $(ECHO) $(BOLD) $(RED)"► BUILD FAILED"$(DEFAULT)
 
