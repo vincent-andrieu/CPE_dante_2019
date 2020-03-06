@@ -42,7 +42,7 @@ static char **get_empty_maze(vector scale)
         if (!maze[i])
             return NULL;
         maze[i][(size_x + 1) * 2 - 1] = '\0';
-        for (int u = 0; u < (size_x + 1) * 2 - 1; maze[i][u] = '?', u++);
+        for (int u = 0; u < (size_x + 1) * 2 - 1; maze[i][u] = WALL, u++);
     }
     return maze;
 }
@@ -67,8 +67,7 @@ int main(int ac, char **av)
     scale = (vector) {atoi(av[1]), atoi(av[2])};
     if (scale.x <= 0 || scale.y <= 0)
         return true;
-    //srand(time(NULL));
-    srand(10);
+    srand(time(NULL));
     maze = get_empty_maze(scale);
     if (!maze)
         return 84;
