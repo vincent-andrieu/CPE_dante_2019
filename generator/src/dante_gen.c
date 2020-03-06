@@ -65,7 +65,7 @@ int main(int ac, char **av)
         return 84;
     scale = (vector) {atoi(av[1]), atoi(av[2])};
     if (scale.x <= 0 || scale.y <= 0)
-        return true;
+        return 84;
     srand(time(NULL));
     maze = get_empty_maze(scale);
     if (!maze)
