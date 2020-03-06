@@ -7,6 +7,13 @@
 
 #include "generator.h"
 
+static int display(char **maze)
+{
+    for (int u = 0; maze[u]; u++)
+        printf("%s\n", maze[u]);
+    return 0;
+}
+
 void graph_to_map(char **map, data_t **node, vector scale)
 {
     int x_s = 0;
@@ -18,15 +25,11 @@ void graph_to_map(char **map, data_t **node, vector scale)
             map[y_s][x_s] = EMPTY;
             if (x_s - 1 >= 0)
                 map[y_s][x_s - 1] = (node[y][x].left) ? EMPTY :
-                map[y_s][x_s - 1];
-            if (x_s + 1 < scale.x)
-                map[y_s][x_s + 1] = (node[y][x].right) ? EMPTY :
-                map[y_s][x_s + 1];
+            map[y_s][x_s - 1];
+            map[y_s][x_s + 1] = (node[y][x].right) ? EMPTY : map[y_s][x_s + 1];
             if (y_s - 1 >= 0)
                 map[y_s - 1][x_s] = (node[y][x].up) ? EMPTY : map[y_s - 1][x_s];
-            if (y_s + 1 < scale.y)
-                map[y_s + 1][x_s] = (node[y][x].down) ? EMPTY :
-                map[y_s + 1][x_s];
+            map[y_s + 1][x_s] = (node[y][x].down) ? EMPTY : map[y_s + 1][x_s];
         }
     }
 }
