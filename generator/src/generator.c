@@ -99,7 +99,7 @@ int make_maze(char **maze, vector pos, vector scale)
         return EXIT_ERROR;
     move(graph, pos, scale);
     graph_to_map(maze, graph, scale);
-    for (int y = 0; y < scale.y / 2; y++)
+    for (int y = 0; y < scale.y / 2 + scale.y % 2; y++)
         free(graph[y]);
     free(graph);
     return 0;

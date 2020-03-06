@@ -37,7 +37,7 @@ static char **get_empty_maze(vector scale)
     if (!maze)
         return NULL;
     maze[size_y + scale.y % 2] = NULL;
-    for (int i = 0; i < size_y; i++) {
+    for (int i = 0; i < size_y + scale.y % 2; i++) {
         maze[i] = malloc(sizeof(char) * (size_x + 1 + scale.x % 2));
         if (!maze[i])
             return NULL;
@@ -52,8 +52,9 @@ static int display_maze(char **maze, vector scale)
     for (int u = 0; maze[u] && u < scale.y; u++) {
         write(1, maze[u], scale.x);
         write(1, "\n", 1);
-        free(maze[u]);
     }
+    for (int u = 0; maze[u]; u++)
+        free(maze[u]);
     free(maze);
     return 0;
 }
