@@ -7,13 +7,6 @@
 
 #include "generator.h"
 
-static int display(char **maze)
-{
-    for (int u = 0; maze[u]; u++)
-        printf("%s\n", maze[u]);
-    return 0;
-}
-
 void graph_to_map(char **map, data_t **node, vector scale)
 {
     int x_s = 0;
