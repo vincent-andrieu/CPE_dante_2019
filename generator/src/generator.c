@@ -10,15 +10,15 @@
 
 static data_t **get_graph(vector scale)
 {
-    data_t **graph = malloc(sizeof(data_t *) * (scale.y / 2));
+    data_t **graph = malloc(sizeof(data_t *) * (scale.y / 2 + scale.y % 2));
 
     if (!graph)
         return NULL;
-    for (int y = 0; y < scale.y / 2; y++) {
-        graph[y] = malloc(sizeof(data_t) * (scale.x / 2));
+    for (int y = 0; y < scale.y / 2 + scale.y % 2; y++) {
+        graph[y] = malloc(sizeof(data_t) * (scale.x / 2  + scale.x % 2));
         if (!graph[y])
             return NULL;
-        for (int x = 0; x < scale.x / 2; x++) {
+        for (int x = 0; x < scale.x / 2 + scale.x % 2; x++) {
             graph[y][x].type = '?';
             graph[y][x].visited = false;
             graph[y][x].up = false;
@@ -55,13 +55,13 @@ static vector get_futur_pos(data_t **graph, vector pos, vector scale)
     if (pos.x - 1 >= 0)
         if (!graph[pos.y][pos.x - 1].visited)
             tab[0] = true;
-    if (pos.x + 1 < scale.x / 2)
+    if (pos.x + 1 < scale.x / 2 + scale.x % 2)
         if (!graph[pos.y][pos.x + 1].visited)
             tab[1] = true;
     if (pos.y - 1 >= 0)
         if (!graph[pos.y - 1][pos.x].visited)
             tab[2] = true;
-    if (pos.y + 1 < scale.y / 2)
+    if (pos.y + 1 < scale.y / 2 + scale.y % 2)
         if (!graph[pos.y + 1][pos.x].visited)
             tab[3] = true;
     return get_rand(tab, pos);
