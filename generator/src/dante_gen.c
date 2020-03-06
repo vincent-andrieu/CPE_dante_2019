@@ -8,6 +8,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include <stdio.h>
+#include <unistd.h>
 #include <stdlib.h>
 #include <math.h>
 #include <time.h>
@@ -31,25 +32,26 @@ static char **get_empty_maze(vector scale)
 {
     int size_y = scale.y;
     int size_x = scale.x;
-    char **maze = malloc(sizeof(char *) * (size_y + 1));
+    char **maze = malloc(sizeof(char *) * (size_y + 1 + scale.y % 2));
 
     if (!maze)
         return NULL;
-    maze[size_y] = NULL;
+    maze[size_y + scale.y % 2] = NULL;
     for (int i = 0; i < size_y; i++) {
-        maze[i] = malloc(sizeof(char) * (size_x + 1));
+        maze[i] = malloc(sizeof(char) * (size_x + 1 + scale.x % 2));
         if (!maze[i])
             return NULL;
-        maze[i][size_x] = '\0';
-        for (int u = 0; u < size_x; maze[i][u] = WALL, u++);
+        maze[i][size_x + scale.x % 2] = '\0';
+        for (int u = 0; u < size_x + scale.x % 2; maze[i][u] = WALL, u++);
     }
     return maze;
 }
 
-static int display_maze(char **maze)
+static int display_maze(char **maze, vector scale)
 {
-    for (int u = 0; maze[u]; u++) {
-        printf("%s\n", maze[u]);
+    for (int u = 0; maze[u] && u < scale.y; u++) {
+        write(1, maze[u], scale.x);
+        write(1, "\n", 1);
         free(maze[u]);
     }
     free(maze);
@@ -71,5 +73,5 @@ int main(int ac, char **av)
     if (!maze)
         return 84;
     make_maze(maze, (vector) {0, 0}, scale);
-    return display_maze(maze);
+    return display_maze(maze, scale);
 }
