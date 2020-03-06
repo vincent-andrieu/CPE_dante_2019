@@ -31,18 +31,17 @@ static char **get_empty_maze(vector scale)
 {
     int size_y = scale.y;
     int size_x = scale.x;
-    printf("malloc: %i|%i\n", (size_x + 1) * 2, (size_y + 1) * 2);
-    char **maze = malloc(sizeof(char *) * (size_y + 1) * 2);
+    char **maze = malloc(sizeof(char *) * (size_y + 1));
 
     if (!maze)
         return NULL;
-    maze[(size_y + 1) * 2 - 1] = NULL;
-    for (int i = 0; i < (size_y + 1) * 2 - 1; i++) {
-        maze[i] = malloc(sizeof(char) * (size_x + 1) * 2);
+    maze[size_y] = NULL;
+    for (int i = 0; i < size_y; i++) {
+        maze[i] = malloc(sizeof(char) * (size_x + 1));
         if (!maze[i])
             return NULL;
-        maze[i][(size_x + 1) * 2 - 1] = '\0';
-        for (int u = 0; u < (size_x + 1) * 2 - 1; maze[i][u] = WALL, u++);
+        maze[i][size_x] = '\0';
+        for (int u = 0; u < size_x; maze[i][u] = WALL, u++);
     }
     return maze;
 }
