@@ -30,25 +30,7 @@ static data_t **get_graph(vector scale)
     return graph;
 }
 
-static vector get_rand(bool *tab, vector pos)
-{
-    int nb = rand() % 4;
-
-    for (int cnt = 0; !tab[nb % 4]; nb++, cnt++)
-        if (cnt > 4)
-            return (vector) {-1, -1};
-    if (nb % 4 == 0)
-        return (vector) {pos.x - 1, pos.y};
-    if (nb % 4 == 1)
-        return (vector) {pos.x + 1, pos.y};
-    if (nb % 4 == 2)
-        return (vector) {pos.x, pos.y - 1};
-    if (nb % 4 == 3)
-        return (vector) {pos.x, pos.y + 1};
-    return (vector) {-1, -1};
-}
-
-static vector get_futur_pos(data_t **graph, vector pos, vector scale)
+static vector get_pos(data_t **graph, vector pos, vector scale)
 {
     bool tab[4] = {false, false, false, false};
 
@@ -74,7 +56,7 @@ static void move(data_t **graph, vector pos, vector scale)
     graph[pos.y][pos.x].visited = true;
     graph[pos.y][pos.x].type = EMPTY;
     while (1) {
-        futur_pos = get_futur_pos(graph, pos, scale);
+        futur_pos = get_pos(graph, pos, scale);
         if (futur_pos.x < 0)
             return;
         if (pos.x - futur_pos.x < 0)
@@ -91,7 +73,7 @@ static void move(data_t **graph, vector pos, vector scale)
     }
 }
 
-int make_maze(char **maze, vector pos, vector scale)
+int make_maze_perfect(char **maze, vector pos, vector scale)
 {
     data_t **graph = get_graph(scale);
 

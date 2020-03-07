@@ -42,7 +42,7 @@ static char **get_empty_maze(vector scale)
         if (!maze[i])
             return NULL;
         maze[i][size_x + 1] = '\0';
-        for (int u = 0; u < size_x + 1; maze[i][u] = WALL, u++);
+        for (int u = 0; u < size_x + 1; maze[i][u] = '?', u++);
     }
     return maze;
 }
@@ -73,9 +73,11 @@ int main(int ac, char **av)
     maze = get_empty_maze(scale);
     if (!maze)
         return 84;
-    if (strcmp(av[3], "PERFECT") == 0)
-        make_maze(maze, (vector) {0, 0}, scale);
+    if (ac == 3)
+        make_maze_not_perfect(maze, (vector) {0, 0}, scale);
+    else if (strcmp(av[3], "PERFECT") == 0)
+        make_maze_perfect(maze, (vector) {0, 0}, scale);
     else
-        make_maze(maze, (vector) {0, 0}, scale);
+        return EXIT_ERROR;
     return display_maze(maze, scale);
 }

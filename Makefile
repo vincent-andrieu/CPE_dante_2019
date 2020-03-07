@@ -32,6 +32,8 @@ LIGHT_CYAN      =       "\e[96m"
 
 SRC_GEN =   generator/src/filler_maze.c		\
 			generator/src/dante_gen.c		\
+			generator/src/not_perfect.c		\
+			generator/src/not_perfect_tools_gen.c		\
 			generator/src/generator.c
 SRC_SOL =   solver/src/dante_sol.c 			\
 			solver/src/map.c

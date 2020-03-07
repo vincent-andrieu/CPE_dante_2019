@@ -20,7 +20,14 @@ typedef struct data_s
     bool right;
 } data_t;
 
-int make_maze(char **maze, vector pos, vector scale);
+int make_maze_perfect(char **maze, vector pos, vector scale);
 void graph_to_map(char **map, data_t **node, vector scale);
+
+vector get_rand(bool *tab, vector pos);
+int make_maze_not_perfect(char **maze, vector pos, vector scale);
+void start_maze(char **maze, int x, int y, vector scale);
+void move_not_perfect(char **maze, vector pos, vector scale);
+void finish_maze(char **maze, vector scale);
+vector get_futur_pos(char **maze, vector pos, vector scale);
 
 #endif
