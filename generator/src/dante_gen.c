@@ -73,9 +73,11 @@ int main(int ac, char **av)
     maze = get_empty_maze(scale);
     if (!maze)
         return 84;
-    if (strcmp(av[3], "PERFECT") == 0)
+    if (ac == 3)
+        make_maze(maze, (vector) {0, 0}, scale);
+    else if (strcmp(av[3], "PERFECT") == 0)
         make_maze(maze, (vector) {0, 0}, scale);
     else
-        make_maze(maze, (vector) {0, 0}, scale);
+        return 84;
     return display_maze(maze, scale);
 }
