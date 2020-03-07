@@ -73,6 +73,13 @@ static void move(data_t **graph, vector pos, vector scale)
     }
 }
 
+static void clean_maze(char **maze, vector scale)
+{
+    for (int y = 0; y < scale.y; y++)
+        for (int x = 0; x < scale.x; x++)
+            maze[y][x] = (maze[y][x] == '?') ? WALL : maze[y][x];
+}
+
 int make_maze_perfect(char **maze, vector pos, vector scale)
 {
     data_t **graph = get_graph(scale);
@@ -84,5 +91,6 @@ int make_maze_perfect(char **maze, vector pos, vector scale)
     for (int y = 0; y < scale.y / 2 + 1; y++)
         free(graph[y]);
     free(graph);
+    clean_maze(maze, scale);
     return 0;
 }
