@@ -89,7 +89,7 @@ void finish_maze(char **maze, vector scale)
             if (maze[y][x] == '?') {
                 break_wall(maze, scale, (vector) {x, y});
                 move_not_perfect(maze, (vector) {x, y}, scale);
-                y = 0;
+                y = -1;
                 break;
             }
 }
