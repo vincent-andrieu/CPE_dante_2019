@@ -12,7 +12,23 @@
 #include <stdlib.h>
 #include <math.h>
 #include <time.h>
+#include <sys/time.h>
+#include <sys/resource.h>
 #include "generator.h"
+
+static int set_overflow(void)
+{
+    struct rlimit limit = {0};
+
+    if (getrlimit(RLIMIT_STACK, &limit) == -1)
+        return EXIT_ERROR;
+    printf ("Stack Limit = %ld|%ld max\n", limit.rlim_cur, limit.rlim_max);
+    limit.rlim_cur = (size_t) 1024 * 1024 * (16 * 1000);
+    if (setrlimit(RLIMIT_STACK, &limit) == -1)
+        return EXIT_ERROR;
+    printf ("Stack Limit = %ld|%ld max\n", limit.rlim_cur, limit.rlim_max);
+    return EXIT_SUCCESS;
+}
 
 static bool error_gest(int ac, char **av)
 {
@@ -65,15 +81,15 @@ int main(int ac, char **av)
     vector scale = {0};
     char **maze;
 
-    if (error_gest(ac, av))
-        return 84;
+    if (error_gest(ac, av) || set_overflow() == EXIT_ERROR)
+        return EXIT_ERROR;
     scale = (vector) {atoi(av[1]), atoi(av[2])};
     if (scale.x <= 0 || scale.y <= 0)
-        return 84;
+        return EXIT_ERROR;
     srand(time(NULL));
     maze = get_empty_maze(scale);
     if (!maze)
-        return 84;
+        return EXIT_ERROR;
     if (ac == 3)
         make_maze_not_perfect(maze, (vector) {0, 0}, scale);
     else if (strcmp(av[3], PERFECT) == 0)
