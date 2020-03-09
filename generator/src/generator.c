@@ -10,15 +10,15 @@
 
 static data_t **get_graph(vector scale)
 {
-    data_t **graph = malloc(sizeof(data_t *) * (scale.y / 2 + 1));
+    data_t **graph = malloc(sizeof(data_t *) * (scale.y / 2 + scale.y % 2));
 
     if (!graph)
         return NULL;
-    for (int y = 0; y < scale.y / 2 + 1; y++) {
-        graph[y] = malloc(sizeof(data_t) * (scale.x / 2  + 1));
+    for (int y = 0; y < scale.y / 2 + scale.y % 2; y++) {
+        graph[y] = malloc(sizeof(data_t) * (scale.x / 2 + scale.x % 2));
         if (!graph[y])
             return NULL;
-        for (int x = 0; x < scale.x / 2 + 1; x++) {
+        for (int x = 0; x < scale.x / 2 + scale.x % 2; x++) {
             graph[y][x].type = '?';
             graph[y][x].visited = false;
             graph[y][x].up = false;
@@ -37,13 +37,13 @@ static vector get_pos(data_t **graph, vector pos, vector scale)
     if (pos.x - 1 >= 0)
         if (!graph[pos.y][pos.x - 1].visited)
             tab[0] = true;
-    if (pos.x + 1 < scale.x / 2 + 1)
+    if (pos.x + 1 < scale.x / 2 + scale.x % 2)
         if (!graph[pos.y][pos.x + 1].visited)
             tab[1] = true;
     if (pos.y - 1 >= 0)
         if (!graph[pos.y - 1][pos.x].visited)
             tab[2] = true;
-    if (pos.y + 1 < scale.y / 2 + 1)
+    if (pos.y + 1 < scale.y / 2 + scale.y % 2)
         if (!graph[pos.y + 1][pos.x].visited)
             tab[3] = true;
     return get_rand(tab, pos);
@@ -88,7 +88,7 @@ int make_maze_perfect(char **maze, vector pos, vector scale)
         return EXIT_ERROR;
     move(graph, pos, scale);
     graph_to_map(maze, graph, scale);
-    for (int y = 0; y < scale.y / 2 + 1; y++)
+    for (int y = 0; y < scale.y / 2 + scale.y % 2; y++)
         free(graph[y]);
     free(graph);
     clean_maze(maze, scale);
