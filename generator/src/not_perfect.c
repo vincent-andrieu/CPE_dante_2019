@@ -51,3 +51,23 @@ int make_maze_not_perfect(char **maze, vector pos, vector scale)
     finish_maze(maze, scale);
     return 0;
 }
+
+void bool_tab_filler(char **maze, vector scale, vector pos, bool *tab)
+{
+    if (pos.x - 1 >= 0) {
+        if (maze[pos.y][pos.x - 1] == WALL)
+            tab[0] = true;
+    }
+    if (pos.x + 1 < scale.x) {
+        if (maze[pos.y][pos.x + 1] == WALL)
+            tab[1] = true;
+    }
+    if (pos.y - 1 >= 0) {
+        if (maze[pos.y - 1][pos.x] == WALL)
+            tab[2] = true;
+    }
+    if (pos.y + 1 < scale.y) {
+        if (maze[pos.y + 1][pos.x] == WALL)
+            tab[3] = true;
+    }
+}

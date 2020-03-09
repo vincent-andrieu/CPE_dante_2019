@@ -31,5 +31,6 @@ void start_maze(char **maze, int x, int y, vector scale);
 void move_not_perfect(char **maze, vector pos, vector scale);
 void finish_maze(char **maze, vector scale);
 vector get_futur_pos(char **maze, vector pos, vector scale);
+void bool_tab_filler(char **maze, vector scale, vector pos, bool *tab);
 
 #endif

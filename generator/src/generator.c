@@ -34,18 +34,22 @@ static vector get_pos(data_t **graph, vector pos, vector scale)
 {
     bool tab[4] = {false, false, false, false};
 
-    if (pos.x - 1 >= 0)
+    if (pos.x - 1 >= 0) {
         if (!graph[pos.y][pos.x - 1].visited)
             tab[0] = true;
-    if (pos.x + 1 < scale.x / 2 + scale.x % 2)
+    }
+    if (pos.x + 1 < scale.x / 2 + scale.x % 2) {
         if (!graph[pos.y][pos.x + 1].visited)
             tab[1] = true;
-    if (pos.y - 1 >= 0)
+    }
+    if (pos.y - 1 >= 0) {
         if (!graph[pos.y - 1][pos.x].visited)
             tab[2] = true;
-    if (pos.y + 1 < scale.y / 2 + scale.y % 2)
+    }
+    if (pos.y + 1 < scale.y / 2 + scale.y % 2) {
         if (!graph[pos.y + 1][pos.x].visited)
             tab[3] = true;
+    }
     return get_rand(tab, pos);
 }
 

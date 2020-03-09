@@ -42,18 +42,7 @@ static void break_wall(char **maze, vector scale, vector pos)
     vector rm;
     bool tab[4] = {false, false, false, false};
 
-    if (pos.x - 1 >= 0)
-        if (maze[pos.y][pos.x - 1] == WALL)
-            tab[0] = true;
-    if (pos.x + 1 < scale.x)
-        if (maze[pos.y][pos.x + 1] == WALL)
-            tab[1] = true;
-    if (pos.y - 1 >= 0)
-        if (maze[pos.y - 1][pos.x] == WALL)
-            tab[2] = true;
-    if (pos.y + 1 < scale.y)
-        if (maze[pos.y + 1][pos.x] == WALL)
-            tab[3] = true;
+    bool_tab_filler(maze, scale, pos, tab);
     rm = get_rand(tab, pos);
     if (rm.x < 0)
         return;
@@ -64,7 +53,7 @@ static void break_wall(char **maze, vector scale, vector pos)
 void move_not_perfect(char **maze, vector pos, vector scale)
 {
     bool is_wall = false;
-    vector futur_pos= get_futur_pos(maze, pos, scale);;
+    vector futur_pos= get_futur_pos(maze, pos, scale);
 
     maze[pos.y][pos.x] = EMPTY;
     while (!(futur_pos.x < 0)) {
