@@ -51,7 +51,8 @@ static int display_maze(char **maze, vector scale)
 {
     for (int u = 0; maze[u] && u < scale.y; u++) {
         write(1, maze[u], scale.x);
-        write(1, "\n", 1);
+        if (maze[u + 2])
+            write(1, "\n", 1);
     }
     for (int u = 0; maze[u]; u++)
         free(maze[u]);
