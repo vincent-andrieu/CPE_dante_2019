@@ -19,7 +19,7 @@ static bool error_gest(int ac, char **av)
     if (ac == 3)
         return false;
     else if (ac == 4) {
-        if (strcmp(av[3], "PERFECT") == 0)
+        if (strcmp(av[3], PERFECT) == 0)
             return false;
         else
             return true;
@@ -75,7 +75,7 @@ int main(int ac, char **av)
         return 84;
     if (ac == 3)
         make_maze_not_perfect(maze, (vector) {0, 0}, scale);
-    else if (strcmp(av[3], "PERFECT") == 0)
+    else if (strcmp(av[3], PERFECT) == 0)
         make_maze_perfect(maze, (vector) {0, 0}, scale);
     else
         return EXIT_ERROR;
