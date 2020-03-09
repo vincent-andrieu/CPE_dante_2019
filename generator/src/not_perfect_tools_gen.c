@@ -64,13 +64,10 @@ static void break_wall(char **maze, vector scale, vector pos)
 void move_not_perfect(char **maze, vector pos, vector scale)
 {
     bool is_wall = false;
-    vector futur_pos;
+    vector futur_pos= get_futur_pos(maze, pos, scale);;
 
     maze[pos.y][pos.x] = EMPTY;
-    while (1) {
-        futur_pos = get_futur_pos(maze, pos, scale);
-        if (futur_pos.x < 0)
-            return;
+    while (!(futur_pos.x < 0)) {
         if (what_is_next(&is_wall)) {
             if (maze[futur_pos.y][futur_pos.x] == '$')
                 move_not_perfect(maze, futur_pos, scale);
@@ -79,6 +76,7 @@ void move_not_perfect(char **maze, vector pos, vector scale)
         }
         else
             move_not_perfect(maze, futur_pos, scale);
+        futur_pos = get_futur_pos(maze, pos, scale);
     }
 }
 
