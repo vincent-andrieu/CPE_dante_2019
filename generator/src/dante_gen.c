@@ -22,11 +22,9 @@ static int set_overflow(void)
 
     if (getrlimit(RLIMIT_STACK, &limit) == -1)
         return EXIT_ERROR;
-    printf ("Stack Limit = %ld|%ld max\n", limit.rlim_cur, limit.rlim_max);
     limit.rlim_cur = (size_t) 1024 * 1024 * (16 * 1000);
     if (setrlimit(RLIMIT_STACK, &limit) == -1)
         return EXIT_ERROR;
-    printf ("Stack Limit = %ld|%ld max\n", limit.rlim_cur, limit.rlim_max);
     return EXIT_SUCCESS;
 }
 
