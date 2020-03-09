@@ -75,6 +75,9 @@ static void move(data_t **graph, vector pos, vector scale)
 
 static void clean_maze(char **maze, vector scale)
 {
+    maze[scale.y - 1][scale.x - 1] = EMPTY;
+    if (scale.y % 2 == 0 && scale.x % 2 == 0)
+        maze[scale.y - 2][scale.x - 1] = EMPTY;
     for (int y = 0; y < scale.y; y++)
         for (int x = 0; x < scale.x; x++)
             maze[y][x] = (maze[y][x] == '?') ? WALL : maze[y][x];
