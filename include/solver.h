@@ -11,5 +11,6 @@
 #define SOL_DANTE_H_
 
 char **get_map(int argc, char **argv, vector *end);
+int get_result(char **map, vector const end, vector coord);
 
 #endif

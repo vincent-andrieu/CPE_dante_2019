@@ -78,10 +78,14 @@ int main(int argc, char **argv)
 
     if (neighbors == NULL)
         return EXIT_ERROR;
-    if (check_nodes(map, neighbors, end, (vector) {0, 0}) == EXIT_SUCCESS)
-        for (int i = 0; map[i] != NULL; i++)
-            printf("%s\n", map[i]);
-    else
+    if (check_nodes(map, neighbors, end, (vector) {0, 0}) == EXIT_SUCCESS) {
+        get_result(map, end, end);
+        for (int i = 0; map[i] != NULL; i++) {
+            printf("%s", map[i]);
+            if (map[i + 1] != NULL)
+                printf("\n");
+        }
+    } else
         printf("no solution found\n");
     free_tabs(map, neighbors);
     return EXIT_SUCCESS;
