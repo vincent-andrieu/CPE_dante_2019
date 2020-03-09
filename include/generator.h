@@ -10,6 +10,8 @@
 
 #include "dante.h"
 
+#define PERFECT "perfect"
+
 typedef struct data_s
 {
     char type;
