@@ -48,6 +48,8 @@ NAME_SOL	=   ./solver/solver
 CFLAGS  +=  -I include -Wall -Wextra
 LDFLAGS +=  -L lib/my -lmy
 
+TEST = @gcc -o unit_tests solver/src/dante_sol.c solver/src/map.c solver/src/result.c tests/tests_solver.c $(LDFLAGS) $(CFLAGS) --coverage -lcriterion
+
 all:    $(NAME_GEN) $(NAME_SOL)
 
 $(NAME_GEN):    $(OBJ_GEN)
@@ -74,6 +76,11 @@ fclean: clean
 		@($(ECHO) $(BOLD) $(GREEN)✓$(LIGHT_BLUE)" FCLEAN "$(DEFAULT))
 
 re: fclean all
+
+tests_run:
+	make -C lib/my
+	$(TEST)
+	./unit_tests
 
 debug: CFLAGS += -g
 debug: re
