@@ -24,11 +24,11 @@ static char **str_to_array(char *buffer, vector *end)
     free(buffer);
     if (map == NULL || map[0] == NULL)
         return NULL;
-    end->y = my_strlen(map[0]);
-    for (end->x = 1; map[end->x] != NULL; end->x++)
-        if (my_strlen(map[end->x]) != end->y)
+    end->x = my_strlen(map[0]);
+    for (end->y = 1; map[end->y] != NULL; end->y++)
+        if (my_strlen(map[end->y]) != end->x)
             return NULL;
-    if (map[0][0] != EMPTY || map[--end->x][--end->y] != EMPTY)
+    if (map[0][0] != EMPTY || map[--end->y][--end->x] != EMPTY)
         return NULL;
     return map;
 }
