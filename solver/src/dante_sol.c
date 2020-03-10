@@ -83,7 +83,7 @@ static int check_nodes(char **map, bool **neighbors,
     return EXIT_FAILURE;
 }
 
-int main(int argc, char **argv)
+int dante_solver(int argc, char **argv)
 {
     vector end;
     char **map = get_map(argc, argv, &end);
