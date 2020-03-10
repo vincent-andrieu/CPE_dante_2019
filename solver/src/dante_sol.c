@@ -63,9 +63,9 @@ static bool **init_neighbors(vector const end)
 static int check_nodes(char **map, bool **neighbors,
                         vector const end, vector coord)
 {
-    vector const coords[4] = {(vector) {coord.x, coord.y - 1},
+    vector const coords[4] = {(vector) {coord.x, coord.y + 1},
                             (vector) {coord.x + 1, coord.y},
-                            (vector) {coord.x, coord.y + 1},
+                            (vector) {coord.x, coord.y - 1},
                             (vector) {coord.x - 1, coord.y}};
 
     if (coord.x == end.x && coord.y == end.y) {
