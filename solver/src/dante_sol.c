@@ -6,6 +6,7 @@
 */
 
 #include <stdio.h>
+#include <sys/resource.h>
 #include "dante.h"
 #include "solver.h"
 
@@ -21,6 +22,18 @@ static void free_tabs(char **map, bool **neighbors)
     free(neighbors[i]);
     free(neighbors[i + 1]);
     free(neighbors);
+}
+
+static int set_overflow(void)
+{
+    struct rlimit limit = {0};
+
+    if (getrlimit(RLIMIT_STACK, &limit) == -1)
+        return EXIT_ERROR;
+    limit.rlim_cur = (size_t) 1024 * 1024 * (16 * 1000);
+    if (setrlimit(RLIMIT_STACK, &limit) == -1)
+        return EXIT_ERROR;
+    return EXIT_SUCCESS;
 }
 
 static bool **init_neighbors(vector const end)
@@ -76,7 +89,7 @@ int main(int argc, char **argv)
     char **map = get_map(argc, argv, &end);
     bool **neighbors = map == NULL ? NULL : init_neighbors(end);
 
-    if (neighbors == NULL)
+    if (neighbors == NULL || set_overflow() == EXIT_ERROR)
         return EXIT_ERROR;
     if (check_nodes(map, neighbors, end, (vector) {0, 0}) == EXIT_SUCCESS) {
         get_result(map, end, end);
