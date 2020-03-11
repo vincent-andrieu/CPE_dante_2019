@@ -37,7 +37,8 @@ SRC_GEN =   generator/src/filler_maze.c		\
 			generator/src/generator.c
 SRC_SOL =   solver/src/dante_sol.c 			\
 			solver/src/result.c 			\
-			solver/src/map.c
+			solver/src/map.c 			\
+			solver/src/main.c
 
 OBJ_GEN =   $(SRC_GEN:.c=.o)
 OBJ_SOL =   $(SRC_SOL:.c=.o)
