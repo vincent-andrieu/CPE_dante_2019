@@ -47,6 +47,7 @@ char **get_map(int argc, char **argv, vector *end)
     if (fd == -1 || buffer == NULL)
         return NULL;
     read_size = read(fd, buffer, st.st_size);
+    close(fd);
     if (read_size == -1)
         return NULL;
     buffer[read_size] = '\0';
