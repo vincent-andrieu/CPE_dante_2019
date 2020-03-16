@@ -99,7 +99,7 @@ int dante_solver(int argc, char **argv)
                 printf("\n");
         }
     } else
-        printf("no solution found\n");
+        printf("no solution found");
     free_tabs(map, neighbors);
     return EXIT_SUCCESS;
 }
