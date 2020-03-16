@@ -32,12 +32,8 @@ static bool error_gest(int ac, char **av)
 {
     if (ac == 3)
         return false;
-    else if (ac == 4) {
-        if (strcmp(av[3], PERFECT) == 0)
-            return false;
-        else
-            return true;
-    }
+    else if (ac == 4 && strcmp(av[3], PERFECT) == 0)
+        return false;
     else
         return true;
 }
