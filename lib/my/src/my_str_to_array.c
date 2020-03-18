@@ -10,72 +10,82 @@
 #include <string.h>
 #include "my.h"
 
-static bool is_split_char(char const *str, char const c)
+static bool were_parth(const char c)
 {
-    if (c == '\0')
+    if (c == ' ' || c == '\0' || c == '\n')
         return true;
-    for (int i = 0; str[i] != '\0'; i++)
-        if (str[i] == c)
-            return true;
+    if (c <= 32)
+        return true;
     return false;
 }
 
-static int get_size(char const *str, char const *c_list, bool const keep_splits)
+static int cnt_word(const char *str)
 {
-    int count = 0;
+    int cnt = 0;
 
     for (int i = 0; str[i] != '\0'; i++)
-        if (i > 0 && !is_split_char(c_list, str[i - 1])
-        && is_split_char(c_list, str[i]))
-            count++;
-    if (keep_splits)
-        for (int i = 0; str[i] != '\0'; i++)
-            count += is_split_char(c_list, str[i]) ? 1 : 0;
-    count += is_split_char(c_list, str[my_strlen(str) - 1]) ? 1 : 2;
-    return count;
+        if (!were_parth(str[i]) && were_parth(str[i + 1]))
+            cnt++;
+    return cnt;
 }
 
-static void do_split(char const *str, char const *c_list,
-                    bool const keep_splits, char **tab)
+static int *char_per_word(const char *str, int size)
 {
-    int word = 0;
-    bool in_marks = str[0] == '"';
+    int cnt = 1;
+    int move = 0;
+    int *word = malloc(sizeof(int) * (size + 1));
 
-    for (int i = 1; i <= my_strlen(str); i++) {
-        if (!in_marks && ((!keep_splits && !is_split_char(c_list, str[i - 1])
-                    && is_split_char(c_list, str[i]))
-                    || (keep_splits && (is_split_char(c_list, str[i])
-                    || (i > 0 && is_split_char(c_list, str[i - 1]))
-                    || i == my_strlen(str))))) {
-            tab[word++] = strndup(str[0] == '"' ? str + 1 : str,
-                                    str[i - 1] == '"' ? i - 2 : i);
-            str += i;
-            if (!keep_splits && str[0] != '\0')
-                for (; str[0] != '\0' && is_split_char(c_list, str[0]); str++);
-            i = 0;
+    if (!word)
+        return NULL;
+    word[size] = -1;
+    for (int i = 0; str[i] != '\0'; i++)
+    {
+        if (!were_parth(str[i]) && were_parth(str[i + 1])) {
+            word[move] = cnt;
+            cnt = 0;
+            move++;
         }
-        in_marks = str[i] == '"' ? !in_marks : in_marks;
+        if (!were_parth(str[i]))
+            cnt++;
     }
-    tab[word] = NULL;
+    return word;
 }
 
-char **my_str_to_array(char const *str, char const *c_list,
-                    bool const keep_splits)
+static void tab_filler(const char *str, char **tab)
 {
-    char **tab;
-    int count = 0;
+    int move = 0;
+    int cnt = 0;
 
-    if (str == NULL || str[0] == '\0')
-        return NULL;
     for (int i = 0; str[i] != '\0'; i++)
-        if (str[i] == '"')
-            count++;
-    if (count % 2 != 0)
+    {
+        if (!were_parth(str[i])) {
+            tab[move][cnt] = str[i];
+            tab[move][cnt + 1] = '\0';
+            cnt++;
+        }
+        if (!were_parth(str[i]) && were_parth(str[i + 1])) {
+            move++;
+            cnt = 0;
+        }
+    }
+}
+
+char **my_str_to_array(const char *str)
+{
+    int size = cnt_word(str);
+    char **tab = malloc(sizeof(char *) * (size + 1));
+    int *word = char_per_word(str, size);
+
+    if (!tab || !word)
         return NULL;
-    for (; !keep_splits && is_split_char(c_list, str[0]); str++);
-    tab = malloc(sizeof(char *) * get_size(str, c_list, keep_splits));
-    if (tab == NULL)
-        return NULL;
-    do_split(str, c_list, keep_splits, tab);
+    tab[size] = NULL;
+    for (int i = 0; i < size; i++) {
+        tab[i] = malloc(sizeof(char) * (word[i] + 1));
+        if (!tab[i])
+            return NULL;
+        tab[i][word[i]] = '\0';
+    }
+    tab_filler(str, tab);
+    free(word);
     return tab;
 }

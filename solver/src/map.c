@@ -20,7 +20,7 @@ static char **str_to_array(char *buffer, vector *end)
             free(buffer);
             return NULL;
         }
-    map = my_str_to_array(buffer, "\n", false);
+    map = my_str_to_array(buffer);
     free(buffer);
     if (map == NULL || map[0] == NULL)
         return NULL;

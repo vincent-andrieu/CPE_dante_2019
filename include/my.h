@@ -13,6 +13,6 @@
 #define READ_SIZE 10
 
 int my_strlen(char const *str);
-char **my_str_to_array(char const *str, char const *c_list, bool kp_splts);
+char **my_str_to_array(char const *str);
 
 #endif
